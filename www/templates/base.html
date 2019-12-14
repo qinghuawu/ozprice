@@ -1,0 +1,20 @@
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - 主页</title>
+      {% else %}
+      <title>Welcome to Chemist价格网</title>
+      {% endif %}
+    </head>
+    <body>
+
+        <div>
+            <a href="{{ url('index') }}">主页</a>
+            <a href="{{ url('discount') }}">大折扣</a>
+        </div>
+        <hr>
+
+    {% block content %}{% endblock %}
+
+    </body>
+</html>

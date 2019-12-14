@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hi, {{ user }}!</h1>
+    <div class="discount">
+        <div align="center" style="font-size:25px">今日大折扣</div>
+        <br>
+        {% if discount_products %}
+            <table align="center">
+                {% for five_products in discount_products %}
+                    <tr>
+                        {% for product in five_products %}
+                            <td>
+                                <a href="{{ product.url }}">
+                                    <img src="{{ product.image }}" align="middle">
+                                    <div align="center" style="width:185px; height:46px">{{ product.title_chinese }}</div>
+                                </a>
+                                <div align="center" style="font-size:22px">
+                                    <span>${{ product.price }}</span>
+                                    <span style="color:red"> ({{ product.discount }} Off)</span>
+                                </div>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div align="center" style="font-size:20px">今日无史低，去折扣区逛逛吧!</div>
+        {% endif %}
+    </div>
+{% endblock %}

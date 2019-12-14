@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hi, {{ user }}!</h1>
+    <div class="cheapest_in_history">
+        <div align="center" style="font-size:25px">今日史低价</div>
+        <br>
+        <br>
+        {% if cheapest_products %}
+            <table align="center">
+                {% for five_products in cheapest_products %}
+                    <tr>
+                        {% for product in five_products %}
+                            <td>
+                                <a href="{{ product.url }}">
+                                    <img src="{{ product.image }}" align="middle">
+                                    <div align="center" style="width:185px; height:46px">{{ product.title_chinese }}</div>
+                                </a>
+                                <div align="center" style="font-size:22px">${{ product.price }}</div>
+                                <div align="center" style="font-size:22px; color:red">{{ product.discount }} Off</div>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <div align="center" style="font-size:20px">今日无史低，去折扣区逛逛吧!</div>
+        {% endif %}
+    </div>
+{% endblock %}

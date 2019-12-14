@@ -1,0 +1,14 @@
+<!--awesome-python3-webapp/templates/test.html-->
+{% set title = "Main" %}
+
+<body>
+    {% if questions %}
+        <ul>
+        {% for question in questions %}
+            <li>{{ question.question_text }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No questions are available.</p>
+    {% endif %}
+</body>
