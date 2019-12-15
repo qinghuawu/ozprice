@@ -5,8 +5,7 @@ from aiohttp import web
 from security import generate_password_hash
 import asyncio
 
-from orm import Model, StringField, BooleanField, FloatField, TextField, IntegerField, create_pool
-import orm
+from orm import Model, StringField, BooleanField, FloatField, TextField, create_pool
 
 
 def next_id():
