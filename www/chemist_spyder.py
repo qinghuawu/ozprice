@@ -4,6 +4,7 @@ import re
 import time
 from bs4 import BeautifulSoup
 import aiomysql
+from models import Chemist
 
 
 async def open_url(url, session, headers):
@@ -76,7 +77,15 @@ async def init_spyder(app):
                 }
                 categories = ['256/health', '257/beauty', '258/medicines', '259/personal-care', '260/medical-aids']
                 await asyncio.gather(*[item_by_category(x, session, headers, app['db_pool']) for x in categories])
-            await asyncio.sleep(60*60*3)
+
+                async with app['db_pool'].acquire() as conn:
+                    cheapest_products = await Chemist.findAll(conn, where='price=lowest_price and discount != 0',
+                                                              orderBy='title_chinese', limit=220)
+                    timeout = 3.5*60*60
+                    for i, product in enumerate(cheapest_products):
+                        await app['redis_pool'].hmset_dict(f'top_{i}', product)
+                        await app['redis_pool'].expire(f'top_{i}', timeout)
+            await asyncio.sleep(3*60*60)
     except asyncio.CancelledError:
         pass
     finally:
